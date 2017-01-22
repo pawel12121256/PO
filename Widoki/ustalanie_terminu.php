@@ -1,11 +1,29 @@
 <?php
 $edycja = $_POST['edycja'];
 $pesel = $_POST['pesel'];
-if( $edycja=='posted' && !preg_match('/[0-9]{11}/',$pesel)) 
-		alert("Wpisany numer PESEL jest niepoprawny. Prawdopodobnie pomyliłeś się podczas wpisywania numeru.");
-
+if( $edycja=='posted' && !preg_match('/[0-9]{11}/',$pesel)) {
+		
+		echo "<script type='text/javascript'>
+		r = confirm('Wpisany numer PESEL jest niepoprawny. Prawdopodobnie pomyliłeś się podczas wpisywania numeru.\\n OK - SPRÓBUJ JESZCZE RAZ\\n Anuluj - POWRÓT DO MENU');
+		
+		if(r==1){
+			window.location.href='ustalanie_terminu.php';
+		}
+		else{
+			window.location.href='start.php';
+		}
+		</script>";
+		
+		/*
+		if($r==1){}
+		else {
+			header("location: start.php");
+		}
+		*/
+}
 function alert($msg) {
-    echo "<script type='text/javascript'>alert('$msg');</script>";
+    echo "<script type='text/javascript'>r = confirm('$msg');</script>";
+	return r;
 }
 ?>
 
