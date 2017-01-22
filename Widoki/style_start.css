@@ -1,0 +1,26 @@
+body {
+    background-color: white;
+}
+
+h1 {
+    color: black;
+    text-align: center;
+	font-family:  "Arial", "verdana", Sans-serif;
+    font-size: 550%;
+	font-weight: lighter;
+}
+
+button {
+	height:10%;
+	width:70%;
+	font-family: "Arial", "verdana", Sans-serif;
+    font-size: 150%;
+	font-weight: lighter;
+	margin: 15px;
+	box-shadow:3px 3px 6px 4px black;
+}
+
+p {
+    font-family: "Arial", "verdana", Sans-serif;
+    font-size: 20px;
+}

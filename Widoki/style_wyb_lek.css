@@ -1,0 +1,45 @@
+body {
+    background-color: white;
+}
+
+h1 {
+    color: black;
+    text-align: center;
+	font-family:  "Arial", "verdana", Sans-serif;
+    font-size: 250%;
+	font-weight: lighter;
+}
+
+button {
+	font-family: "Arial", "verdana", Sans-serif;
+    font-size: 80%;
+	font-weight: lighter;
+	margin: 35px;
+	margin-left: 155px;
+	margin-right: 155px;
+	box-shadow:3px 3px 6px 4px black;
+}
+
+input {
+	
+	font-size: 150%;
+}
+
+p {
+    font-family: "Arial", "verdana", Sans-serif;
+    font-size: 120%;
+}
+
+ul {
+    list-style-type:none;
+	font-family: "Arial", "verdana", Sans-serif;
+	font-size: 120%;
+	font-weight: lighter;
+	margin: 0px;
+	text-align: left;
+}
+
+li {
+	margin: 5px;
+}
+	
