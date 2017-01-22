@@ -1,3 +1,11 @@
+<?php
+
+require_once('../Dane/bazadanych.php');
+
+$db = new Database("mysql.cba.pl","pawel12121234","pawelHUE1234", 'pawel12121234');
+
+?>
+
 </html>
 		<head>
 			<title>TWOJA PRZYCHODNIA</title>
@@ -10,30 +18,21 @@
 	
 	<div id="" style="overflow-y: scroll; height:300px; width:900px; border: medium solid black;">
 		<ul>
-			<li>pierwszy</li>
-			<li>pierwszy</li>
-			<li>pierwszy</li>
-			<li>pierwszy</li>
-			<li>pierwszy</li>
-			<li>pierwszy</li>
-			<li>pierwszy</li>
-			<li>pierwszy</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
-			<li>drugi</li>
+		<?php
+		
+		$sql = "SELECT pesel,imie,nazwisko FROM `Lekarz` JOIN `Osoba` USING(pesel)";
+		$rezultat = $db->query($sql);
+		
+		
+			while ($row = ($rezultat->fetch_assoc()))
+			{
+			print("<li>");
+					
+					print("<a href='wyb_lek.php?pesel=$row[pesel]' style='color:black; text-decoration: none;'>$row[imie] $row[nazwisko]</a>");
+				
+			print("</li>");
+			}
+		?>
 		</ul>
 	
 	</div>
