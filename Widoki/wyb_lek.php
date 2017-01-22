@@ -24,7 +24,10 @@ if($pesel_lek != '' && ($rezultat_x->num_rows)==0){
 		}
 		</script>";
 		
+}
+else if($pesel_lek != '' && ($rezultat_x->num_rows)>0){
 	$_SESSION['pesel_lek'] = $pesel_lek;
+	header("location: wyb_ter.php");
 }
 
 ?>
