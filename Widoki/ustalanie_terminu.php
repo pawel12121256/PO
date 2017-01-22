@@ -21,6 +21,11 @@ if( $edycja=='posted' && !preg_match('/[0-9]{11}/',$pesel)) {
 		}
 		*/
 }
+else if( $edycja=='posted' && preg_match('/[0-9]{11}/',$pesel)) {
+	header("location: wyb_lek.php");
+}
+	
+	
 function alert($msg) {
     echo "<script type='text/javascript'>r = confirm('$msg');</script>";
 	return r;
