@@ -48,6 +48,10 @@ else if( $edycja=='posted' && preg_match('/[0-9]{11}/',$pesel)) {
 		
 	}
 	else{
+		session_start();
+		$_SESSION['pesel_pacj'] = $pesel;
+		setcookie('sessionID', session_id(), time()+300);
+		
 		header("location: wyb_lek.php");
 	}
 }
