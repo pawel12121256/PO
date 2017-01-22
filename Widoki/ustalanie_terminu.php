@@ -1,10 +1,17 @@
 <?php
+
+require_once('../Dane/bazadanych.php');
+
 $edycja = $_POST['edycja'];
 $pesel = $_POST['pesel'];
+
+$db = new Database("mysql.cba.pl","pawel12121234","pawelHUE1234", 'pawel12121234');
+
+
 if( $edycja=='posted' && !preg_match('/[0-9]{11}/',$pesel)) {
 		
 		echo "<script type='text/javascript'>
-		r = confirm('Wpisany numer PESEL jest niepoprawny. Prawdopodobnie pomyliłeś się podczas wpisywania numeru.\\n OK - SPRÓBUJ JESZCZE RAZ\\n Anuluj - POWRÓT DO MENU');
+		r = confirm('Błędny PESEL\\n\\n Wpisany numer PESEL jest niepoprawny. Prawdopodobnie pomyliłeś się podczas wpisywania numeru.\\n OK - SPRÓBUJ JESZCZE RAZ\\n Anuluj - POWRÓT DO MENU');
 		
 		if(r==1){
 			window.location.href='ustalanie_terminu.php';
@@ -22,7 +29,27 @@ if( $edycja=='posted' && !preg_match('/[0-9]{11}/',$pesel)) {
 		*/
 }
 else if( $edycja=='posted' && preg_match('/[0-9]{11}/',$pesel)) {
-	header("location: wyb_lek.php");
+	
+	$sql = "SELECT * FROM `Pacjent` WHERE `pesel`='$pesel'";
+	$rezultat = $db->query($sql);
+	
+	if(($rezultat->num_rows)==0){
+		
+		echo "<script type='text/javascript'>
+		r = confirm('Brak numeru PESEL w bazie danych\\n\\n Nie znaleziono wpisanego numeru PESEL w bazie danych. Być może pacjent nie jest jeszcze zarejestrowany w systemie.\\n OK - SPRÓBUJ JESZCZE RAZ\\n Anuluj - POWRÓT DO MENU');
+		
+		if(r==1){
+			window.location.href='ustalanie_terminu.php';
+		}
+		else{
+			window.location.href='start.php';
+		}
+		</script>";
+		
+	}
+	else{
+		header("location: wyb_lek.php");
+	}
 }
 	
 	
