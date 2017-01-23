@@ -149,12 +149,12 @@ else if($pesel_lek != '' && ($rezultat_x->num_rows)>0){
 	<h1>Powód nieobecności:</h1>
 	
 	<textarea rows="4" cols="120" name="usprawiedliwienie" placeholder="Tutaj wpisz powód nieobecności... "></textarea>
-
-
-		<p><input type="hidden" name="edycja" value="posted"/><br></p>
 	
 		<a href="odw_lek.php"><button type="button">POWRÓT</button></a>
 		<button type="submit">DALEJ</button>
+		
+		<p><input type="hidden" name="edycja" value="posted"/><br></p>
+		
 	</form>
 	
 	
