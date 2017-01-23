@@ -88,6 +88,7 @@ if($pesel_lek != '' && ($rezultat_x->num_rows)==0){
 			<link rel="icon" type="image/png" href="favicon.png" sizes="16x16" />
 			<link rel="stylesheet" href="style_wyb_lek.css" />
 		</head>
+	<body>
 	<center>
 	<h1>Wybierz termin wizyty:</h1>
 	
@@ -125,7 +126,7 @@ if($pesel_lek != '' && ($rezultat_x->num_rows)==0){
 	
 	</div>
 	
-	<a href="wyb_lek.php"><button type="button">POWROT</button></a>
+	<a href="wyb_lek.php"><button type="button">POWRÓT</button></a>
 	
 	</center>
 	</body>

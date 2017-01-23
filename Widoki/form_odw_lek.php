@@ -56,7 +56,108 @@ else if($pesel_lek != '' && ($rezultat_x->num_rows)>0){
 	
 	
 	
-	<a href="ustalanie_terminu.php"><button type="button">POWRÓT</button></a>
+	
+	<form method = "post" action = "form_odw_lek.php">
+	
+	<table style="width:100%">
+		<tr>
+			<th style="width:500px"><h2>Początek:</h2></th>
+			<th></th> 
+			<th style="width:500px"><h2>Koniec:</h2></th>
+		</tr>
+		<tr>
+			<td>
+				<table style="width:100%">
+					<tr>
+						<td style="width:100px"></td>
+						<td><h6>Dzień</h6></td>
+						<td><h6>Miesiąc</h6></td>
+						<td><h6>Rok</h6></td>
+						<td style="width:100px"></td>
+					</tr>
+					<tr>
+						<td style="width:100px"></td>
+						<td><input type="text" name="dzien_pocz" required /></td>
+						<td><input type="text" name="miesiac_pocz" required /></td>
+						<td><input type="text" name="rok_pocz" required /></td>
+						<td style="width:100px"></td>
+					</tr>
+				</table>
+			</td>
+			
+			<td></td>
+			
+			<td>
+				<table style="width:100%">
+					<tr>
+						<td style="width:100px"></td>
+						<td><h6>Dzień</h6></td>
+						<td><h6>Miesiąc</h6></td>
+						<td><h6>Rok</h6></td>
+						<td style="width:100px"></td>
+					</tr>
+					<tr>
+						<td style="width:100px"></td>
+						<td><input type="text" name="dzien_kon" required /></td>
+						<td><input type="text" name="miesiac_kon" required /></td>
+						<td><input type="text" name="rok_kon" required /></td>
+						<td style="width:100px"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table style="width:100%">
+					<tr>
+						<td style="width:150px"></td>
+						<td><h6>Godz.</h6></td>
+						<td><h6>Min.</h6></td>
+						<td style="width:150px"></td>
+					</tr>
+					<tr>
+						<td style="width:150px"></td>
+						<td><input type="text" name="godz_pocz" required /></td>
+						<td><input type="text" name="min_pocz" required /></td>
+						<td style="width:150px"></td>
+					</tr>
+				</table>
+			</td>
+			
+			<td></td>
+			
+			<td>
+				<table style="width:100%">
+					<tr>
+						<td style="width:150px"></td>
+						<td><h6>Godz.</h6></td>
+						<td><h6>Min.</h6></td>
+						<td style="width:150px"></td>
+					</tr>
+					<tr>
+						<td style="width:150px"></td>
+						<td><input type="text" name="godz_kon" required /></td>
+						<td><input type="text" name="min_kon" required /></td>
+						<td style="width:150px"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	
+	<h1>Powód nieobecności:</h1>
+	
+	<textarea rows="4" cols="120" name="usprawiedliwienie" placeholder="Tutaj wpisz powód nieobecności... "></textarea>
+
+
+		<p><input type="hidden" name="edycja" value="posted"/><br></p>
+	
+		<a href="odw_lek.php"><button type="button">POWRÓT</button></a>
+		<button type="submit">DALEJ</button>
+	</form>
+	
+	
 	
 	</center>
 	</body>
