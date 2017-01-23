@@ -7,7 +7,10 @@ $db = new Database("mysql.cba.pl","pawel12121234","pawelHUE1234", 'pawel12121234
 session_start($_COOKIE["sessionID"]);
 setcookie('sessionID', session_id(), time()+300);
 
-$pesel_lek = $_GET['pesel'];
+$lekarzID = $_GET['lekarzID'];
+$_SESSION['lekarzID'] = $lekarzID;
+
+/*
 
 $pesel_pacjen = $_SESSION['pesel_pacj'];
 $sql_y = "SELECT login FROM `Pacjent` WHERE `pesel`='$pesel_pacjen'";
@@ -37,6 +40,8 @@ else if($pesel_lek != '' && ($rezultat_x->num_rows)>0){
 	header("location: wyb_ter.php?check=ok");
 }
 
+*/
+
 ?>
 
 </html>
@@ -47,30 +52,11 @@ else if($pesel_lek != '' && ($rezultat_x->num_rows)>0){
 			<link rel="stylesheet" href="style_form_odw_lek.css" />
 		</head>
 	<center>
-	<h1>Wybierz lekarza:</h1>
+	<h1>Wybierz zakres absencji:</h1>
 	
-	<div id="" style="overflow-y: scroll; height:300px; width:900px; border: medium solid black;">
-		<ul>
-		<?php
-		
-		$sql = "SELECT pesel,imie,nazwisko FROM `Lekarz` JOIN `Osoba` USING(pesel)";
-		$rezultat = $db->query($sql);
-		
-		
-			while ($row = ($rezultat->fetch_assoc()))
-			{
-			print("<li>");
-					
-					print("<a href='wyb_lek.php?pesel=$row[pesel]' style='color:black; text-decoration: none;'>$row[imie] $row[nazwisko]</a>");
-				
-			print("</li>");
-			}
-		?>
-		</ul>
 	
-	</div>
 	
-	<a href="ustalanie_terminu.php"><button type="button">POWROT</button></a>
+	<a href="ustalanie_terminu.php"><button type="button">POWRÓT</button></a>
 	
 	</center>
 	</body>

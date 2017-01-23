@@ -38,7 +38,7 @@ $db = new Database("mysql.cba.pl","pawel12121234","pawelHUE1234", 'pawel12121234
 	
 	</div>
 	
-	<a href="ustalanie_terminu.php"><button type="button">POWROT</button></a>
+	<a href="start.php"><button type="button">POWROT</button></a>
 	
 	</center>
 	</body>
