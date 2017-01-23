@@ -9,6 +9,56 @@ setlocale(LC_TIME, "pl_PL");
 session_start($_COOKIE["sessionID"]);
 setcookie('sessionID', session_id(), time()+300);
 
+$id_wizyty = $_GET['wizyta'];
+$zapisac = $_GET['zapisac'];
+$check = $_GET['check'];
+
+
+if($id_wizyty != '' && $check = 'lek') {
+	
+	$_SESSION['wizyta_id'] = $id_wizyty;
+	
+	echo "<script type='text/javascript'>
+		r = confirm('Potwierdź zapis.\\n\\n Czy na pewno chcesz zapisać pacjenta na ten termin?\\n OK - TAK\\n Anuluj - NIE');
+		
+		if(r==1){
+			window.location.href='wyb_ter.php?zapisac=tak';
+		}
+		else{
+			window.location.href='wyb_ter.php?zapisac=nie';
+		}
+		</script>";
+		
+}
+
+else if($zapisac == 'tak') {
+	
+	$login_pac = $_SESSION['login_pacj'];
+	$id_wizyt = $_SESSION['wizyta_id'];
+	
+	echo $login_pac;
+	echo $id_wizyt;
+	
+	$sql = "UPDATE `Wizyta` SET `login_pacjenta` = '$login_pac' WHERE `Wizyta`.`wizytaID` = '$id_wizyt';";
+	$db->query($sql);
+	
+	
+	echo "<script type='text/javascript'>
+		alert('Potwierdzenie zapisu.\\n\\n Twój zapis został wykonany poprawnie.');
+		window.location.href='start.php';
+		</script>";
+		
+	setcookie('sessionID', session_id(), time());
+		
+}
+else if($zapisac == 'nie') {
+	echo "<script type='text/javascript'>
+		
+		
+		</script>";
+		
+}
+
 /*
 
 $sql_x = "SELECT * FROM `Lekarz` JOIN `Wizyta` USING(lekarzID) WHERE `Lekarz`.`pesel`='$pesel_lek' AND `login_pacjenta`=''";
@@ -66,7 +116,7 @@ if($pesel_lek != '' && ($rezultat_x->num_rows)==0){
 					$godz_st = $row[godzina];
 					$godz_end = $row[godzina_k];
 					
-					print("<a href='wyb_ter.php?wizyta=$row[wizytaID]' style='color:black; text-decoration: none;'>$dzien_tyg_sl $godz_st - $godz_end</a>");
+					print("<a href='wyb_ter.php?wizyta=$row[wizytaID]&check=lek' style='color:black; text-decoration: none;'>$dzien_tyg_sl $godz_st - $godz_end</a>");
 				
 			print("</li>");
 			}

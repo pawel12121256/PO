@@ -44,7 +44,7 @@ else if($pesel_lek != '' && ($rezultat_x->num_rows)>0){
 			<title>TWOJA PRZYCHODNIA</title>
 			<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 			<link rel="icon" type="image/png" href="favicon.png" sizes="16x16" />
-			<link rel="stylesheet" href="style_wyb_lek.css" />
+			<link rel="stylesheet" href="style_form_odw_lek.css" />
 		</head>
 	<center>
 	<h1>Wybierz lekarza:</h1>
