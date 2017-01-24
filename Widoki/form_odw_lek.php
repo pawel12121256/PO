@@ -10,6 +10,45 @@ setcookie('sessionID', session_id(), time()+300);
 $lekarzID = $_GET['lekarzID'];
 $_SESSION['lekarzID'] = $lekarzID;
 
+$edycja = $_POST['edycja'];
+
+$stan = $_GET['stan'];
+
+if($edycja == 'posted') {
+	$_SESSION['dzien_pocz'] = $_POST['dzien_pocz'];
+	$_SESSION['miesiac_pocz'] = $_POST['miesiac_pocz'];
+	$_SESSION['rok_pocz'] = $_POST['rok_pocz'];
+	$_SESSION['dzien_kon'] = $_POST['dzien_kon'];
+	$_SESSION['miesiac_kon'] = $_POST['miesiac_kon'];
+	$_SESSION['rok_kon'] = $_POST['rok_kon'];
+	$_SESSION['godz_pocz'] = $_POST['godz_pocz'];
+	$_SESSION['min_pocz'] = $_POST['min_pocz'];
+	$_SESSION['godz_kon'] = $_POST['godz_kon'];
+	$_SESSION['min_kon'] = $_POST['min_kon'];
+	
+	echo "<script type='text/javascript'>
+		r = confirm('Potwierdź odwołanie.\\n\\n Czy na pewno chcesz odwołać wizyty?\\n OK - TAK\\n Anuluj - NIE');
+		
+		if(r==1){
+			window.location.href='form_odw_lek.php?stan=1';
+		}
+		else{
+			window.location.href='form_odw_lek.php';
+		}
+		</script>";
+	
+}
+else if($stan == 1){
+	echo "<script type='text/javascript'>
+		alert('Potwierdzenie odwołania\\n\\n Poprawnie odwołano wizyty!');
+		window.location.href='start.php';
+		</script>";
+		
+	setcookie('sessionID', session_id(), time());
+}
+
+
+
 /*
 
 $pesel_pacjen = $_SESSION['pesel_pacj'];
