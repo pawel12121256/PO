@@ -7,12 +7,15 @@ $db = new Database("mysql.cba.pl","pawel12121234","pawelHUE1234", 'pawel12121234
 session_start($_COOKIE["sessionID"]);
 setcookie('sessionID', session_id(), time()+300);
 
-$lekarzID = $_GET['lekarzID'];
-$_SESSION['lekarzID'] = $lekarzID;
 
 $edycja = $_POST['edycja'];
 
 $stan = $_GET['stan'];
+
+if($edycja == '' && $stan == '') {
+	$lekarzID = $_GET['lekarzID'];
+	$_SESSION['lekarzID'] = $lekarzID;
+}
 
 if($edycja == 'posted') {
 	$_SESSION['dzien_pocz'] = $_POST['dzien_pocz'];
@@ -51,11 +54,39 @@ else if($stan == 1){
 	$godz_kon = $_SESSION['godz_kon'];
 	$min_kon = $_SESSION['min_kon'];
 	
-	if(mktime ($godz_pocz, $min_pocz, 0, $miesiac_pocz, $dzien_pocz, $rok_pocz) < mktime ($godz_kon, $min_kon, 0, $miesiac_kon, $dzien_kon, $rok_kon) &&
+	$time_d_po_re = mktime ($godz_pocz, $min_pocz, 0, $miesiac_pocz, $dzien_pocz, $rok_pocz);
+	$time_d_zak_re = mktime ($godz_kon, $min_kon, 0, $miesiac_kon, $dzien_kon, $rok_kon);
+	
+	if($time_d_po_re < $time_d_zak_re &&
 		$dzien_pocz<=31 && $dzien_pocz>=1 && $miesiac_pocz<= 12 && $miesiac_pocz>=1 && $godz_pocz<=23 && $godz_pocz>=0 && $min_pocz<=59 && $min_pocz>=0 && 
 		$dzien_kon<=31 && $dzien_kon>=1 && $miesiac_kon<= 12 && $miesiac_kon>=1 && $godz_kon<=23 && $godz_kon>=0 && $min_kon<=59 && $min_kon>=0 &&
-		mktime ($godz_pocz, $min_pocz, 0, $miesiac_pocz, $dzien_pocz, $rok_pocz) > time() &&
-		mktime ($godz_kon, $min_kon, 0, $miesiac_kon, $dzien_kon, $rok_kon) > time()){
+		$time_d_po_re > time() &&
+		$time_d_zak_re > time()){
+			
+		$IDlekarza = $_SESSION['lekarzID'];
+			
+		$sql_x = "SELECT * FROM `Wizyta` WHERE `lekarzID`='$IDlekarza'";
+		$rezultat_x = $db->query($sql_x);
+		
+			while ($row = ($rezultat_x->fetch_assoc()))
+			{
+				$IDwiz = $row[wizytaID];
+				$date_po = $row[data];
+				$g_po = $row[godzina];
+				$g_zak = $row[godzina_k];
+				
+				$time_d_po_bd = strtotime($date_po . $g_po);
+				$time_d_zak_bd = strtotime($date_po . $g_zak);
+				
+				
+				if($time_d_zak_bd>$time_d_po_re && $time_d_zak_re>$time_d_po_bd) {
+					$sql_y = "UPDATE `Wizyta` SET `login_pacjenta` = '' WHERE `Wizyta`.`wizytaID` = '$IDwiz'";
+					$db->query($sql_y);
+				}
+				
+			}
+			
+			
 	
 		echo "<script type='text/javascript'>
 			alert('Potwierdzenie odwołania\\n\\n Poprawnie odwołano wizyty!');
