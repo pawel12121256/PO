@@ -39,12 +39,45 @@ if($edycja == 'posted') {
 	
 }
 else if($stan == 1){
-	echo "<script type='text/javascript'>
-		alert('Potwierdzenie odwołania\\n\\n Poprawnie odwołano wizyty!');
-		window.location.href='start.php';
-		</script>";
+	
+	$dzien_pocz = $_SESSION['dzien_pocz'];
+	$miesiac_pocz = $_SESSION['miesiac_pocz'];
+	$rok_pocz = $_SESSION['rok_pocz'];
+	$dzien_kon = $_SESSION['dzien_kon'];
+	$miesiac_kon = $_SESSION['miesiac_kon'];
+	$rok_kon = $_SESSION['rok_kon'];
+	$godz_pocz = $_SESSION['godz_pocz'];
+	$min_pocz = $_SESSION['min_pocz'];
+	$godz_kon = $_SESSION['godz_kon'];
+	$min_kon = $_SESSION['min_kon'];
+	
+	if(mktime ($godz_pocz, $min_pocz, 0, $miesiac_pocz, $dzien_pocz, $rok_pocz) < mktime ($godz_kon, $min_kon, 0, $miesiac_kon, $dzien_kon, $rok_kon) &&
+		$dzien_pocz<=31 && $dzien_pocz>=1 && $miesiac_pocz<= 12 && $miesiac_pocz>=1 && $godz_pocz<=23 && $godz_pocz>=0 && $min_pocz<=59 && $min_pocz>=0 && 
+		$dzien_kon<=31 && $dzien_kon>=1 && $miesiac_kon<= 12 && $miesiac_kon>=1 && $godz_kon<=23 && $godz_kon>=0 && $min_kon<=59 && $min_kon>=0 &&
+		mktime ($godz_pocz, $min_pocz, 0, $miesiac_pocz, $dzien_pocz, $rok_pocz) > time() &&
+		mktime ($godz_kon, $min_kon, 0, $miesiac_kon, $dzien_kon, $rok_kon) > time()){
+	
+		echo "<script type='text/javascript'>
+			alert('Potwierdzenie odwołania\\n\\n Poprawnie odwołano wizyty!');
+			window.location.href='start.php';
+			</script>";
 		
-	setcookie('sessionID', session_id(), time());
+		setcookie('sessionID', session_id(), time());
+	
+	}
+	else
+	{
+		echo "<script type='text/javascript'>
+		r = confirm('Niepoprawny czas\\n\\n Wprowadzony zakres czasowy jest niepoprawny.\\n OK - SPRÓBUJ JESZCZE RAZ\\n Anuluj - POWRÓT DO MENU');
+		
+		if(r==1){
+			window.location.href='form_odw_lek.php';
+		}
+		else{
+			window.location.href='start.php';
+		}
+		</script>";
+	}
 }
 
 
@@ -90,6 +123,7 @@ else if($pesel_lek != '' && ($rezultat_x->num_rows)>0){
 			<link rel="icon" type="image/png" href="favicon.png" sizes="16x16" />
 			<link rel="stylesheet" href="style_form_odw_lek.css" />
 		</head>
+	<body>
 	<center>
 	<h1>Wybierz zakres absencji:</h1>
 	
