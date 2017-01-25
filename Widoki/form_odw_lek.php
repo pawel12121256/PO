@@ -84,18 +84,13 @@ else if($stan == 1){
 				
 				if($time_d_zak_bd>$time_d_po_re && $time_d_zak_re>$time_d_po_bd) {
 					
-					
 					$poczta = new Poczta();
 					if($poczta->sendMails($usprawiedliwienie)){
-						echo "<script type='text/javascript'>
-						alert('Potwierdzenie odwołania\\n\\n Poprawnie odwołano wizyty!');
-						window.location.href='start.php';
-						</script>";
-		
-						setcookie('sessionID', session_id(), time());
 						
-						$sql_y = "UPDATE `Wizyta` SET `login_pacjenta` = '' WHERE `Wizyta`.`wizytaID` = '$IDwiz'";
+						$sql_y = "DELETE FROM `Wizyta` WHERE `Wizyta`.`wizytaID` = '$IDwiz'";
 						$db->query($sql_y);
+		
+						
 					}
 					else
 					{
@@ -110,14 +105,20 @@ else if($stan == 1){
 						}
 						</script>";
 					}
-					header("location: start.php");
+				//	header("location: start.php");
 				}
+				
+				echo "<script type='text/javascript'>
+						alert('Potwierdzenie odwołania\\n\\n Poprawnie odwołano wizyty!');
+						window.location.href='start.php';
+						</script>";
+						
 			}
 			
 			
 	
 		
-	
+	setcookie('sessionID', session_id(), time());
 	}
 	else
 	{
