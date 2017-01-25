@@ -1,6 +1,7 @@
 <?php
 
 require_once('../Dane/bazadanych.php');
+require_once('../Logika/Poczta.php');
 
 $db = new Database("mysql.cba.pl","pawel12121234","pawelHUE1234", 'pawel12121234');
 
@@ -28,6 +29,7 @@ if($edycja == 'posted') {
 	$_SESSION['min_pocz'] = $_POST['min_pocz'];
 	$_SESSION['godz_kon'] = $_POST['godz_kon'];
 	$_SESSION['min_kon'] = $_POST['min_kon'];
+	$_SESSION['usprawiedliwienie'] = $_POST['usprawiedliwienie'];
 	
 	echo "<script type='text/javascript'>
 		r = confirm('Potwierdź odwołanie.\\n\\n Czy na pewno chcesz odwołać wizyty?\\n OK - TAK\\n Anuluj - NIE');
@@ -53,6 +55,7 @@ else if($stan == 1){
 	$min_pocz = $_SESSION['min_pocz'];
 	$godz_kon = $_SESSION['godz_kon'];
 	$min_kon = $_SESSION['min_kon'];
+	$usprawiedliwienie = $_SESSION['usprawiedliwienie'];
 	
 	$time_d_po_re = mktime ($godz_pocz, $min_pocz, 0, $miesiac_pocz, $dzien_pocz, $rok_pocz);
 	$time_d_zak_re = mktime ($godz_kon, $min_kon, 0, $miesiac_kon, $dzien_kon, $rok_kon);
@@ -80,20 +83,40 @@ else if($stan == 1){
 				
 				
 				if($time_d_zak_bd>$time_d_po_re && $time_d_zak_re>$time_d_po_bd) {
-					$sql_y = "UPDATE `Wizyta` SET `login_pacjenta` = '' WHERE `Wizyta`.`wizytaID` = '$IDwiz'";
-					$db->query($sql_y);
+					
+					
+					$poczta = new Poczta();
+					if($poczta->sendMails($usprawiedliwienie)){
+						echo "<script type='text/javascript'>
+						alert('Potwierdzenie odwołania\\n\\n Poprawnie odwołano wizyty!');
+						window.location.href='start.php';
+						</script>";
+		
+						setcookie('sessionID', session_id(), time());
+						
+						$sql_y = "UPDATE `Wizyta` SET `login_pacjenta` = '' WHERE `Wizyta`.`wizytaID` = '$IDwiz'";
+						$db->query($sql_y);
+					}
+					else
+					{
+						echo "<script type='text/javascript'>
+						r = confirm('Błąd podczas wysyłania\\n\\n Podczas wysyłania wiadomości do pacjentów wystąpił błąd.\\n OK - KONTYNUUJ\\n Anuluj - POWRÓT DO MENU');
+		
+						if(r==1){
+							window.location.href='form_odw_lek.php?stan=2';
+						}
+						else{
+							window.location.href='start.php';
+						}
+						</script>";
+					}
+					header("location: start.php");
 				}
-				
 			}
 			
 			
 	
-		echo "<script type='text/javascript'>
-			alert('Potwierdzenie odwołania\\n\\n Poprawnie odwołano wizyty!');
-			window.location.href='start.php';
-			</script>";
 		
-		setcookie('sessionID', session_id(), time());
 	
 	}
 	else
@@ -110,7 +133,18 @@ else if($stan == 1){
 		</script>";
 	}
 }
-
+else if($stan == 2){
+	echo "<script type='text/javascript'>
+		r = confirm('Błąd podczas wysyłania\\n\\n Chcesz spróbować jeszcze raz czy odwołać bez powiadamiania pacjentów?\\n OK - ODWOŁAJ BEZ POWIADAMIANIA\\n Anuluj - SPRÓBUJ JESZCZE RAZ');
+		
+		if(r==1){
+			window.location.href='powiadom.php';
+		}
+		else{
+			window.location.href='form_odw_lek.php';
+		}
+		</script>";
+}
 
 
 /*
